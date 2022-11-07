@@ -25,6 +25,12 @@ private final UserService userService;
         return "index";
     }
 
+    @GetMapping("/{id}")
+    public String getUser(@PathVariable("id") int id, Model model) {
+        model.addAttribute("user", userService.show(id));
+        return "user";
+    }
+
 
     @GetMapping(value = "/new")
     public String getUserFormForCreate(@ModelAttribute("user") User user, Model model) {
