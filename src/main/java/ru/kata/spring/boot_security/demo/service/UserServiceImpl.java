@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.dao.RoleDao;
 import ru.kata.spring.boot_security.demo.dao.UserDao;
+import ru.kata.spring.boot_security.demo.models.Role;
 import ru.kata.spring.boot_security.demo.models.User;
 
 import java.util.Collections;
@@ -69,5 +70,9 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void delete(int id) {
         userDao.delete(id);
+    }
+    @Override
+    public List<Role> listRoles() {
+        return roleDao.listRoles();
     }
 }

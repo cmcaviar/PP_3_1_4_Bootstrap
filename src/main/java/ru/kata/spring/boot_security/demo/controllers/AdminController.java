@@ -24,12 +24,13 @@ private final UserService userService;
         model.addAttribute("users", userService.getAllUsers());
         return "index";
     }
-    @GetMapping("/new")
-    public String newUser(Model model) {
-        model.addAttribute(new User());
+
+
+    @GetMapping(value = "/new")
+    public String getUserFormForCreate(@ModelAttribute("user") User user, Model model) {
+        model.addAttribute("roles", userService.listRoles());
         return "new";
     }
-
     @PostMapping
     public String create(@ModelAttribute("user") @Valid User user,
                          BindingResult bindingResult) {
@@ -42,6 +43,7 @@ private final UserService userService;
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable("id") int id, Model model) {
         model.addAttribute("user", userService.show(id));
+        model.addAttribute("roles", userService.listRoles());
         return "edit";
     }
 
