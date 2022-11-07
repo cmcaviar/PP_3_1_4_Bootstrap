@@ -2,13 +2,15 @@ package ru.kata.spring.boot_security.demo.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import ru.kata.spring.boot_security.demo.models.Role;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-@Component
+@Repository
 public class RoleDaoImpl implements RoleDao {
 
     @PersistenceContext
@@ -39,5 +41,8 @@ public class RoleDaoImpl implements RoleDao {
             userRoles.add(getRoleByName(role.getName()));
         }
         return userRoles;
+    }
+    public List<Role> listRoles() {
+        return entityManager.createQuery("select s from Role s", Role.class).getResultList();
     }
 }

@@ -7,10 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
-import java.security.Principal;
 
 @RequestMapping("/user")
 @Controller
@@ -21,11 +19,10 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-    @GetMapping()
-    public String getUser(Model model, Principal principal) {
-        User user = (User) userService.loadUserByUsername(principal.getName());
-        model.addAttribute("user", user);
-        return "show";
+    @GetMapping("/{id}")
+    public String getUser(@PathVariable("id") int id, Model model) {
+        model.addAttribute("user", userService.show(id));
+        return "user";
     }
 
 

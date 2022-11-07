@@ -5,7 +5,29 @@
 </head>
 <body>
 <h1>User, welcome spring boot security page!</h1>
-
+<table border="1" cellpadding="5"
+       style="border-collapse: collapse; border: 1px solid black;">
+    <thead>
+    <tr>
+        <th>Username</th>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Password</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td th:text="${user.username}"></td>
+        <td th:text="${user.name}"></td>
+        <td th:text="${user.age}"></td>
+        <td>*****</td>
+    </tr>
+    </tbody>
+</table>
+<br>
+<form th:method="GET" th:action="@{/logout}">
+    <input type="submit" value="Logout">
+</form>
 
 </body>
 </html>
