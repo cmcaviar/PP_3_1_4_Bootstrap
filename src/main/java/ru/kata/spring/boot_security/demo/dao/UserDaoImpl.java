@@ -38,7 +38,6 @@ public class UserDaoImpl implements UserDao {
         entityManager.merge(user);
     }
     @Override
-    @Transactional
     public User findUserByUsername(String username) throws UsernameNotFoundException {
         TypedQuery<User> query = entityManager.createQuery("SELECT u FROM User u WHERE u.username= :username", User.class);
         query.setParameter("username", username);
@@ -51,7 +50,6 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    @Transactional
     public void delete(int id) {
         entityManager.remove(show(id));
     }
