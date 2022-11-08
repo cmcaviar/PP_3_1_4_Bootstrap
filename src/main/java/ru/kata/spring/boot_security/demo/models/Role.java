@@ -2,14 +2,17 @@ package ru.kata.spring.boot_security.demo.models;
 
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.stereotype.Component;
 
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 
 @Entity
+@Component
 @Table(name = "roles")
 public class Role implements GrantedAuthority {
 
@@ -19,13 +22,14 @@ public class Role implements GrantedAuthority {
     private int id;
     @Column(name = "name")
     private String name;
-
+    @Transient
     @ManyToMany(mappedBy = "roles")
     private Set<User> users;
 
-    public Role(int id, String name) {
+    public Role(int id, String name, Set<User> users) {
         this.id = id;
         this.name = name;
+        this.users = users;
 
     }
 
@@ -67,22 +71,22 @@ public class Role implements GrantedAuthority {
         return getName();
     }
 
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) {
-//            return true;
-//        }
-//        if (o == null || getClass() != o.getClass()) {
-//            return false;
-//        }
-//        Role role = (Role) o;
-//        return Objects.equals(getId(), role.getId()) &&
-//                Objects.equals(getName(), role.getName()) &&
-//                Objects.equals(getUsers(), role.getUsers());
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(getId(), getName(), getUsers());
-//    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Role role = (Role) o;
+        return Objects.equals(id, role.id) &&
+                Objects.equals(name, role.name) &&
+                Objects.equals(users, role.users);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, users);
+    }
 }

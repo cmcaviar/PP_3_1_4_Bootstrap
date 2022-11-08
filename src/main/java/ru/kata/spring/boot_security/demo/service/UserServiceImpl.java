@@ -15,7 +15,7 @@ import ru.kata.spring.boot_security.demo.models.User;
 import java.util.Collections;
 import java.util.List;
 @Service
-@Transactional
+
 public class UserServiceImpl implements UserService {
 
     private final UserDao userDao;
@@ -33,6 +33,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
+    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userDao.findUserByUsername(username);
         if (user == null) {
@@ -42,11 +43,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<User> getAllUsers() {
         return userDao.getAllUsers();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public User show(int id) {
         return userDao.show(id);
     }
@@ -73,6 +76,7 @@ public class UserServiceImpl implements UserService {
         userDao.delete(id);
     }
     @Override
+    @Transactional(readOnly = true)
     public List<Role> listRoles() {
         return roleDao.listRoles();
     }
