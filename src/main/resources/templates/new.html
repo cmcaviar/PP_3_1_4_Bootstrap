@@ -26,12 +26,12 @@
     <input type="password" th:field="*{password}" id="password"/>
     <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">invalid password</div>
     <br>
-    <label for="roles">Права доступа</label>
-    <br/>
-    <select multiple th:field="*{roles}" id="roles">
-        <option th:each="role : ${roles}" th:value="${role.getId()}" th:text="${role.getName()}">
-        </option>
-    </select>
+<!--    <label for="roles">Права доступа</label>-->
+<!--    <br/>-->
+<!--    <select multiple th:field="*{roles}" id="roles">-->
+<!--        <option th:each="role : ${roles}" th:value="${role.getId()}" th:text="${role.getName()}">-->
+<!--        </option>-->
+<!--    </select>-->
     <br/>
     <br>
     <input type="submit" value="Create!"/>
