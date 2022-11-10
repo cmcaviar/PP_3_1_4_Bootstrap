@@ -10,7 +10,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 import java.util.Collection;
-import java.util.HashSet;
+
 import java.util.Objects;
 import java.util.Set;
 
@@ -61,6 +61,7 @@ public class User implements UserDetails {
     }
 
     @Override
+    @Autowired
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles();
     }
