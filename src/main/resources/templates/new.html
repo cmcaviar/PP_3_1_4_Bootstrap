@@ -27,9 +27,9 @@
     <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">invalid password</div>
     <br>
     <label>Role:
-        <select size="2" multiple name="role" required="required">
-            <option selected="selected" value="1">USER</option>
-            <option value="2">ADMIN</option>
+        <select multiple th:field="*{roles}" id="roles">
+            <option th:each="role : ${roles}" th:value="${role.getId()}" th:text="${role.getName()}">
+            </option>
         </select>
     </label>
     <br/>
