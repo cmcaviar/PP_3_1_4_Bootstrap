@@ -11,12 +11,14 @@
     <table border="2">
         <tr>
             <th>Name</th>
+            <th>Surname</th>
             <th>Age</th>
             <th>Username</th>
             <th>Role</th>
         </tr>
         <tr th:each="user:${users}">
             <td th:utext="${user.getName()}"></td>
+            <td th:utext="${user.getLastName()}"></td>
             <td th:utext="${user.getAge()}"></td>
             <td th:utext="${user.getUsername()}"></td>
             <td th:utext="${user.getRoles()}"></td>

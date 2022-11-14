@@ -4,6 +4,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -19,20 +20,24 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(name = "email")
+    @NotEmpty(message = "Required field")
+    @Email(message = "invalid e-mail")
+    private String username;
     @Column(name = "name")
     @NotEmpty(message = "Required field")
     @Size(min = 2, max = 25, message = "Invalid name")
     private String name;
 
+    @Column(name = "last_name")
+    @NotEmpty(message = "Required field")
+    @Size(min = 2, max = 25, message = "Invalid surname")
+    private String lastName;
 
     @Column(name = "age")
     @Min(value = 0, message = "Invalid age")
     private int age;
-
-    @Column(name = "username")
-    @NotEmpty(message = "Required field")
-    @Size(min = 2, max = 25, message = "Invalid login")
-    private String username;
 
     @Column(name = "password")
     @NotEmpty(message = "Required field")
@@ -58,9 +63,15 @@ public class User implements UserDetails {
         return password;
     }
 
-    @Override
     public String getUsername() {
         return username;
+    }
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     @Override
@@ -124,6 +135,14 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
+
+
+    public String getRolesToString() {
+        String s = getRoles().toString().replaceAll("^\\[|\\]$", "");
+        return s.replace("ROLE_", "");
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -132,6 +151,7 @@ public class User implements UserDetails {
         return Objects.equals(id, user.id) &&
                 Objects.equals(age, user.age) &&
                 Objects.equals(name, user.name) &&
+                Objects.equals(lastName, user.lastName) &&
                 Objects.equals(username, user.username) &&
                 Objects.equals(password, user.password) &&
                 Objects.equals(roles, user.roles);
@@ -139,6 +159,6 @@ public class User implements UserDetails {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, age, username, password, roles);
+        return Objects.hash(id, name, age, username, lastName, password, roles);
     }
 }

@@ -22,7 +22,7 @@ public class UserController {
     public String userPage(Model model, Principal principal) {
         UserDetails user = userService.loadUserByUsername(principal.getName());
         model.addAttribute("user", user);
-        return "/user";
+        return "/usertest";
     }
 }
 
