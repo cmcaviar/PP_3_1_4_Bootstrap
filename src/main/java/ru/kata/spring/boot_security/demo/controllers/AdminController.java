@@ -1,6 +1,7 @@
 package ru.kata.spring.boot_security.demo.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.service.UserService;
 import javax.validation.Valid;
+import java.security.Principal;
 
 
 @Controller
@@ -22,9 +24,12 @@ public class AdminController {
     }
 
     @GetMapping()
-    public String getAllUsers(Model model) {
+    public String getAllUsers(Model model, Principal principal) {
         model.addAttribute("users", userService.getAllUsers());
-        return "index";
+        UserDetails user = userService.loadUserByUsername(principal.getName());
+        model.addAttribute("user", user);
+        model.addAttribute("listRoles", userService.listRoles());
+        return "admintest";
     }
 
     @GetMapping("/{id}")
@@ -48,19 +53,16 @@ public class AdminController {
             return "new";
     }
 
-    @GetMapping("/{id}/edit")
-    public String edit(@PathVariable("id") int id, Model model) {
-        model.addAttribute("user", userService.getUserById(id));
-        model.addAttribute("roles", userService.listRoles());
-        return "edit";
-    }
-    @PatchMapping("/{id}")
-    public String update(@ModelAttribute("user") @Valid User user,
-                         BindingResult bindingResult, @PathVariable("id") int id) {
-        if (bindingResult.hasErrors()) {
-            return "edit";
-        }
-        userService.updateUser(userService.getUserById(id));
+
+//    @GetMapping("/{id}/edit")
+//    public String edit(@PathVariable("id") int id, Model model) {
+//        model.addAttribute("user", userService.getUserById(id));
+//        model.addAttribute("roles", userService.listRoles());
+//        return "edit";
+//    }
+    @PutMapping("/edit")
+    public String update(@ModelAttribute("user") User user){
+        userService.updateUser(user);
         return "redirect:/admin";
     }
     @DeleteMapping("/{id}")

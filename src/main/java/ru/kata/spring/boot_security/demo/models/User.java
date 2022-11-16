@@ -21,7 +21,7 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     @NotEmpty(message = "Required field")
     @Email(message = "invalid e-mail")
     private String username;
