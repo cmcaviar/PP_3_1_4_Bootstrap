@@ -11,8 +11,10 @@ import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
-
+import java.util.Set;
 
 
 @Service
@@ -42,14 +44,13 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public void updateUser(User user) {
+    public void updateUser(User user, Set<Role> roles) {
         User userFromDb = getUserById(user.getId());
 
         if (!userFromDb.getPassword().equals(user.getPassword())) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
         }
-
-        userRepository.save(user);
+        saveUser(user, roles);
     }
 
     @Override
@@ -68,8 +69,11 @@ public class UserServiceImpl implements UserService {
     }
     @Transactional
     @Override
-    public void saveUser(User user) {
+    public void saveUser(User user, Set<Role> roles) {
+        user.setRoles(roles);
+        roles.forEach(s -> s.setUsers(new HashSet<>(Collections.singleton(user))));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        roleRepository.saveAll(roles);
         userRepository.save(user);
     }
     @Override

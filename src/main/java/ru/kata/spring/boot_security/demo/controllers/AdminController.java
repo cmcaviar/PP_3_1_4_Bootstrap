@@ -40,15 +40,15 @@ public class AdminController {
         model.addAttribute(userService.getUserById(id));
         return "user";
     }
-    @PostMapping
-    public String create(@ModelAttribute("user") @Valid User user,
-                         BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "new";
-        }
-        userService.saveUser(user);
-        return "redirect:/admin";
-    }
+//    @PostMapping
+//    public String create(@ModelAttribute("user") @Valid User user,
+//                         BindingResult bindingResult) {
+//        if (bindingResult.hasErrors()) {
+//            return "new";
+//        }
+//        userService.saveUser(user);
+//        return "redirect:/admin";
+//    }
 
     @GetMapping("/new")
         public String getUserFormForCreate(@ModelAttribute("user") User user, Model model) {
@@ -57,15 +57,15 @@ public class AdminController {
     }
 
 
-//    @GetMapping("/{id}/edit")
-//    public String edit(@PathVariable("id") int id, Model model) {
-//        model.addAttribute("user", userService.getUserById(id));
-//        model.addAttribute("roles", userService.listRoles());
-//        return "edit";
-//    }
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable("id") int id, Model model) {
+        model.addAttribute("user", userService.getUserById(id));
+        model.addAttribute("roles", userService.listRoles());
+        return "edit";
+    }
     @PutMapping("/edit/{id}")
     public String update(@ModelAttribute("user") User user, @PathVariable("id") int id, @RequestParam("roles") Set<Role> roles){
-        userService.updateUser(userService.getUserById(id));
+        userService.updateUser(userService.getUserById(id), roles);
         return "redirect:/admin";
     }
     @DeleteMapping("/{id}")
