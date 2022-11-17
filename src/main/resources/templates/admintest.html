@@ -161,7 +161,10 @@
                                                         <label for="roles"
                                                                class="col-form-label font-weight-bold">Role</label>
                                                         <select multiple class="form-control" name="roles" id="roles" size="2" th:value="${usr.roles}" >
-                                                            <option th:each="role : ${listRoles}" th:value="${role}" th:text="${role.toString()}"/>
+                                                            <option name="roles"
+                                                                    th:each="role : ${listRoles}"
+                                                                    th:value="${role}"
+                                                                    th:text="${role.toString()}"/>
                                                         </select>
                                                     </div>
                                                     </form>
