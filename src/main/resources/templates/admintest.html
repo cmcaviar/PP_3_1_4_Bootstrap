@@ -69,20 +69,21 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="user:${users}">
-                            <td th:utext="${user.id}"></td>
-                            <td th:utext="${user.name}"></td>
-                            <td th:utext="${user.lastName}"></td>
-                            <td th:utext="${user.age}"></td>
-                            <td th:utext="${user.username}"></td>
-                            <td th:utext="${user.getRolesToString()}"></td>
+                        <tr th:each="usr:${users}">
+                            <td th:utext="${usr.id}"></td>
+                            <td th:utext="${usr.name}"></td>
+                            <td th:utext="${usr.lastName}"></td>
+                            <td th:utext="${usr.age}"></td>
+                            <td th:utext="${usr.username}"></td>
+                            <td th:utext="${usr.getRolesToString()}"></td>
                             <td>
-                                <button class="btn btn-info"
-                                        th:data-bs-target="${'#modalEdit-'+user.id}"
-                                        data-bs-toggle="modal" type="submit">Edit
+                                <button type="button" class="btn btn-info" data-toggle="modal"
+                                        th:data-target="${'#edit' + usr.id}">Edit
                                 </button>
                                 <!-- Modal -->
-                                <div class="modal fade" th:id="'modalEdit-'+${user.id}" tabindex="-1">
+                                <div class="modal fade"
+                                     th:id="'edit'+${usr.id}" tabindex="-1"
+                                     th:aria-labelledby="${'edit' + usr.id}">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
 
@@ -95,8 +96,10 @@
                                                 <div class="modal-body">
                                                     <form class="text-center"
                                                           style="width: 220px; margin: auto"
-                                                          th:method="PUT" th:action="@{/admin/edit}"
-                                                          th:object="${user}">
+                                                          th:method="PUT"
+                                                          th:action="@{/admin/edit/{id}(id=${usr.getId()})}"
+                                                          th:object="${usr}"
+                                                          th:id="${'editForm' + usr.id}">
                                                     <!-- ID -->
                                                     <div class="form-group">
                                                         <label for="id"
@@ -104,7 +107,7 @@
                                                         <input readonly type="text"
                                                                style="height:30px"
                                                                class="form-control"
-                                                               th:value="${user.id}" id="id">
+                                                               th:value="${usr.id}" id="id">
                                                     </div>
                                                     <!-- First Name input -->
                                                     <div class="form-group">
@@ -112,7 +115,7 @@
                                                         <input type="text"
                                                                style="height:30px"
                                                                class="form-control"
-                                                               th:value="${user.name}"
+                                                               th:value="${usr.name}"
                                                                id="firstName"/>
                                                     </div>
 
@@ -122,7 +125,7 @@
                                                         <input type="text"
                                                                style="height:30px"
                                                                class="form-control"
-                                                               th:value="${user.lastName}"
+                                                               th:value="${usr.lastName}"
                                                                id="lastName"/>
                                                     </div>
                                                     <!-- Age input -->
@@ -132,7 +135,7 @@
                                                         <input type="number"
                                                                style="height:30px"
                                                                class="form-control"
-                                                               th:value="${user.age}"
+                                                               th:value="${usr.age}"
                                                                id="age"/>
                                                     </div>
                                                     <!-- Email input -->
@@ -142,7 +145,7 @@
                                                         <input type="email"
                                                                style="height:30px"
                                                                class="form-control"
-                                                               th:value="${user.username}"
+                                                               th:value="${usr.username}"
                                                                id="email"/>
                                                     </div>
                                                     <!-- Password input -->
@@ -151,12 +154,13 @@
                                                         <input type="password"
                                                                style="height:30px"
                                                                class="form-control"
+                                                               th:value="${usr.username}"
                                                                id="password"/>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="roles"
                                                                class="col-form-label font-weight-bold">Role</label>
-                                                        <select multiple class="form-control" name="roles" id="roles" size="2" th:value="${user.roles}" >
+                                                        <select multiple class="form-control" name="roles" id="roles" size="2" th:value="${usr.roles}" >
                                                             <option th:each="role : ${listRoles}" th:value="${role}" th:text="${role.toString()}"/>
                                                         </select>
                                                     </div>
@@ -164,11 +168,10 @@
                                                 </div>
                                                 <div class="modal-footer">
 
-                                                    <button type="button" class="btn btn-secondary"
-                                                            data-bs-dismiss="modal">
-                                                        Close
-                                                    </button>
-                                                    <button type="submit" class="btn btn-primary">Edit</button>
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <input type="submit"
+                                                           th:form="${'editForm' + usr.id}"
+                                                           class="btn btn-primary" value="Edit"/>
                                                 </div>
 
                                         </div>
