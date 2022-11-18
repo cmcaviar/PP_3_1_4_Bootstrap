@@ -44,12 +44,12 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public void updateUser(User user, Set<Role> roles) {
+    public void updateUser(User user, Set<Role> roles, int id) {
         User userFromDb = getUserById(user.getId());
-
         if (!userFromDb.getPassword().equals(user.getPassword())) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
         }
+        user.setId(id);
         saveUser(user, roles);
     }
 

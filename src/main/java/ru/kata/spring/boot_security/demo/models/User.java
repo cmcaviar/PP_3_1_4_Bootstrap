@@ -21,10 +21,11 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "email", unique = true)
+    @Column(name = "email")
     @NotEmpty(message = "Required field")
     @Email(message = "invalid e-mail")
     private String username;
+
     @Column(name = "name")
     @NotEmpty(message = "Required field")
     @Size(min = 2, max = 25, message = "Invalid name")
@@ -52,7 +53,6 @@ public class User implements UserDetails {
 
     public User() {
     }
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

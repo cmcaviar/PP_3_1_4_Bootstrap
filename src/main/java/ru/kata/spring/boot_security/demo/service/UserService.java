@@ -10,7 +10,7 @@ import java.util.Set;
 public interface UserService extends UserDetailsService {
 
 
-    void updateUser(User user, Set<Role> roles);
+    void updateUser(User user, Set<Role> roles, int id);
 
     List<Role> listRoles();
 

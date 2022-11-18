@@ -29,32 +29,49 @@ public class AdminController {
     @GetMapping()
     public String getAllUsers(Model model, Principal principal) {
         model.addAttribute("users", userService.getAllUsers());
-        model.addAttribute("user", userService.loadUserByUsername(principal.getName()));
+        model.addAttribute("userCurrent", userService.loadUserByUsername(principal.getName()));
         model.addAttribute("listRoles", userService.listRoles());
         return "admintest";
     }
 
 
-    @GetMapping("/{id}")
-    public String getUser(@PathVariable("id") int id, Model model) {
-        model.addAttribute(userService.getUserById(id));
-        return "user";
+    @PutMapping("/edit/{id}")
+    public String update(@ModelAttribute("user") User user, @PathVariable("id") int id, @RequestParam("roles") Set<Role> roles){
+        userService.updateUser(user, roles, id);
+        System.out.println(user.getUsername());
+        return "redirect:/admin";
     }
-//    @PostMapping
-//    public String create(@ModelAttribute("user") @Valid User user,
-//                         BindingResult bindingResult) {
-//        if (bindingResult.hasErrors()) {
-//            return "new";
-//        }
-//        userService.saveUser(user);
-//        return "redirect:/admin";
-//    }
 
-    @GetMapping("/new")
-        public String getUserFormForCreate(@ModelAttribute("user") User user, Model model) {
-            model.addAttribute("roles", userService.listRoles());
-            return "new";
+    @DeleteMapping("/delete/{id}")
+    public String delete(@PathVariable("id") int id) {
+        userService.deleteUserById(id);
+        return "redirect:/admin";
     }
+
+    @PostMapping("/new")
+    public String create(@ModelAttribute("user")User user, @RequestParam Set<Role> roles) {
+        userService.saveUser(user, roles);
+        return "redirect:/admin";
+    }
+}
+
+
+
+
+
+
+//    @GetMapping("/{id}")
+//    public String getUser(@PathVariable("id") int id, Model model) {
+//        model.addAttribute(userService.getUserById(id));
+//        return "user";
+ //   }
+
+
+//    @GetMapping("/new")
+//        public String getUserFormForCreate(@ModelAttribute("user") User user, Model model) {
+//            model.addAttribute("roles", userService.listRoles());
+//            return "new";
+//    }
 
 
 //    @GetMapping("/edit/{id}")
@@ -63,14 +80,4 @@ public class AdminController {
 //        model.addAttribute("roles", userService.listRoles());
 //        return "edit";
 //    }
-    @PutMapping("/edit/{id}")
-    public String update(@ModelAttribute("usr") User user, @PathVariable("id") int id, @RequestParam("roles") Set<Role> roles){
-        userService.updateUser(userService.getUserById(id), roles);
-        return "redirect:/admin";
-    }
-    @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") int id) {
-        userService.deleteUserById(id);
-        return "redirect:/admin";
-    }
-}
+
