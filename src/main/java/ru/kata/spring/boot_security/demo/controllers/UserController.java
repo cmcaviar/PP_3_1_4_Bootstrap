@@ -24,6 +24,11 @@ public class UserController {
         model.addAttribute("user", user);
         return "/usertest";
     }
+
+    @GetMapping("/login")
+    public String login() {
+        return "/login";
+    }
 }
 
 
