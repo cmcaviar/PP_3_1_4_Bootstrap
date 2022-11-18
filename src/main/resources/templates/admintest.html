@@ -66,13 +66,13 @@
 
                             <div class="tab-content">
                                 <div class="tab-pane fade show active" id="usersTable">
-                                    <table class="table table-striped bg-white">
-                                        <tbody class="border">
-                                        <tr>
-                                            <th>All Users</th>
-                                        </tr>
-                                        <tr>
-                                            <td>
+                                    <div class="card">
+                                        <h4 class="card-header">All users</h4>
+                                        <div class="card-body">
+
+
+                                            <tr>
+                                                <td>
 
                                                     <!--                  Таблица юзеров-->
                                                     <table class="table table-striped">
@@ -349,92 +349,96 @@
                                                         </tr>
                                                         </tbody>
                                                     </table>
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
+                                                </td>
+                                            </tr>
+
                                         </div>
-                                        <div class="tab-pane fade" id="newUser">
-                                            <table class="table table-striped bg-white">
-                                                <tbody class="border">
-                                                <tr>
-                                                    <th>Add new user</th>
-                                                </tr>
-                                                <tr>
-                                        <!--                                        Таблица NewUser-->
-                                        <td>
-                                            <div class="col-sm-4 mx-auto">
-                                                <form th:method="POST" th:action="@{/admin/new}" th:object="${newUser}">
-                                                    <table class="align-text-bottom">
-                                                        <div class="form-group text-center text-bottom">
-                                                            <label for="newName"><b>First Name</b></label>
-                                                            <input type="text" class="form-control" id="newName"
-                                                                   th:field="*{name}">
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="newUser">
+                                    <div class="card">
 
-                                                        </div>
-                                                        <div class="form-group text-center">
-                                                            <label for="newLastname"><b>Last Name</b></label>
-                                                            <input type="text" class="form-control" id="newLastname"
-                                                                   th:field="*{lastName}">
+                                        <h4 class="card-header">Add new user</h4>
 
-                                                        </div>
-                                                        <div class="form-group text-center">
-                                                            <label for="newAge"><b>Age</b></label>
-                                                            <input type="text" class="form-control" id="newAge"
-                                                                   th:field="*{age}">
+                                        <div class="card-body">
+                                            <tr>
+                                                <!--                                        Таблица NewUser-->
+                                                <td>
+                                                    <div class="col-sm-4 mx-auto">
+                                                        <form th:method="POST" th:action="@{/admin/new}"
+                                                              th:object="${newUser}">
+                                                            <table class="align-text-bottom">
+                                                                <div class="form-group text-center text-bottom">
+                                                                    <label for="newName"><b>First Name</b></label>
+                                                                    <input type="text" class="form-control" id="newName"
+                                                                           th:field="*{name}">
 
-                                                        </div>
-                                                        <div class="form-group text-center">
-                                                            <label for="newUsername"><b>E-mail</b></label>
-                                                            <input type="text" class="form-control" id="newUsername"
-                                                                   th:field="*{username}">
+                                                                </div>
+                                                                <div class="form-group text-center">
+                                                                    <label for="newLastname"><b>Last Name</b></label>
+                                                                    <input type="text" class="form-control"
+                                                                           id="newLastname"
+                                                                           th:field="*{lastName}">
 
-                                                        </div>
-                                                        <div class="form-group text-center">
-                                                            <label for="newPassword"><b>Password</b></label>
-                                                            <input type="text" class="form-control" id="newPassword"
-                                                                   th:field="*{password}">
+                                                                </div>
+                                                                <div class="form-group text-center">
+                                                                    <label for="newAge"><b>Age</b></label>
+                                                                    <input type="text" class="form-control" id="newAge"
+                                                                           th:field="*{age}">
 
-                                                        </div>
-                                                        <div class="form-group text-center">
-                                                            <label for="newRoles"><b>Role</b></label>
-                                                            <select class="custom-select" name="roles" id="newRoles"
-                                                                    multiple="multiple" size="2">
-                                                                <option th:each="role : ${listRoles}"
-                                                                        th:text="${role.toString()}"
-                                                                        th:value="${role.getId()}"/>
-                                                            </select>
+                                                                </div>
+                                                                <div class="form-group text-center">
+                                                                    <label for="newUsername"><b>E-mail</b></label>
+                                                                    <input type="text" class="form-control"
+                                                                           id="newUsername"
+                                                                           th:field="*{username}">
 
-                                                        </div>
-                                                    </table>
-                                                    <div class="col text-center p-3">
-                                                        <button type="submit" th:value="Registration"
-                                                                class="btn btn-success btn-lg "> Add new user
-                                                        </button>
+                                                                </div>
+                                                                <div class="form-group text-center">
+                                                                    <label for="newPassword"><b>Password</b></label>
+                                                                    <input type="text" class="form-control"
+                                                                           id="newPassword"
+                                                                           th:field="*{password}">
+
+                                                                </div>
+                                                                <div class="form-group text-center">
+                                                                    <label for="newRoles"><b>Role</b></label>
+                                                                    <select class="custom-select" name="roles"
+                                                                            id="newRoles"
+                                                                            multiple="multiple" size="2">
+                                                                        <option th:each="role : ${listRoles}"
+                                                                                th:text="${role.toString()}"
+                                                                                th:value="${role.getId()}"/>
+                                                                    </select>
+
+                                                                </div>
+                                                            </table>
+                                                            <div class="col text-center p-3">
+                                                                <button type="submit" th:value="Registration"
+                                                                        class="btn btn-success btn-lg "> Add new user
+                                                                </button>
+                                                            </div>
+                                                        </form>
                                                     </div>
-                                                </form>
-                                            </div>
-                                        </td>
-                                        </tbody>
-                                        </table>
+                                                </td>
+                                            </tr>
+                                            </table>
 
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
 
         </div>
 
     </div>
+</div>
 
-</div>
-</div>
-</div>
-</div>
-</div>
 
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
