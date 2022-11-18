@@ -31,6 +31,7 @@ public class AdminController {
         model.addAttribute("users", userService.getAllUsers());
         model.addAttribute("userCurrent", userService.loadUserByUsername(principal.getName()));
         model.addAttribute("listRoles", userService.listRoles());
+        model.addAttribute("newUser", new User());
         return "admintest";
     }
 
