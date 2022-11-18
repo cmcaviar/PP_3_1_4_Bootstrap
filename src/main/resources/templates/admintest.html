@@ -111,12 +111,12 @@
                                                     </div>
                                                     <!-- First Name input -->
                                                     <div class="form-group">
-                                                        <label for="firstName" class="col-form-label font-weight-bold">First name</label>
+                                                        <label for="name" class="col-form-label font-weight-bold">First name</label>
                                                         <input type="text"
                                                                style="height:30px"
                                                                class="form-control"
                                                                th:value="${usr.name}"
-                                                               id="firstName"/>
+                                                               id="name"/>
                                                     </div>
 
                                                     <!-- Last Name input -->
@@ -157,16 +157,22 @@
                                                                th:value="${usr.username}"
                                                                id="password"/>
                                                     </div>
-                                                    <div class="form-group">
-                                                        <label for="roles"
-                                                               class="col-form-label font-weight-bold">Role</label>
-                                                        <select multiple class="form-control" name="roles" id="roles" size="2" th:value="${usr.roles}" >
-                                                            <option name="roles"
-                                                                    th:each="role : ${listRoles}"
-                                                                    th:value="${role}"
-                                                                    th:text="${role.toString()}"/>
-                                                        </select>
-                                                    </div>
+                                                        <div class="form-group">
+                                                            <label for="password" class="col-form-label font-weight-bold">Role</label>
+                                                            <select multiple
+                                                                    class="form-control form-control-sm"
+                                                                    id="roles"
+                                                                    name="roles"
+                                                                    size="2" required>
+                                                                <option th:each="role: ${listRoles}"
+                                                                        th:value="${role.getId()}">
+                                                                    <th:block
+                                                                            th:text="${role.toString()}">
+                                                                    </th:block>
+                                                                </option>
+                                                            </select>
+
+                                                        </div>
                                                     </form>
                                                 </div>
                                                 <div class="modal-footer">

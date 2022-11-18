@@ -57,14 +57,14 @@ public class AdminController {
     }
 
 
-    @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") int id, Model model) {
-        model.addAttribute("user", userService.getUserById(id));
-        model.addAttribute("roles", userService.listRoles());
-        return "edit";
-    }
+//    @GetMapping("/edit/{id}")
+//    public String edit(@PathVariable("id") int id, Model model) {
+//        model.addAttribute("user", userService.getUserById(id));
+//        model.addAttribute("roles", userService.listRoles());
+//        return "edit";
+//    }
     @PutMapping("/edit/{id}")
-    public String update(@ModelAttribute("user") User user, @PathVariable("id") int id, @RequestParam("roles") Set<Role> roles){
+    public String update(@ModelAttribute("usr") User user, @PathVariable("id") int id, @RequestParam("roles") Set<Role> roles){
         userService.updateUser(userService.getUserById(id), roles);
         return "redirect:/admin";
     }

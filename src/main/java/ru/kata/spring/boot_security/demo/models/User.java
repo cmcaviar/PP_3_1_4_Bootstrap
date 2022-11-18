@@ -159,6 +159,6 @@ public class User implements UserDetails {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, age, username, lastName, password, roles);
+        return getClass().hashCode();
     }
 }
